@@ -1,0 +1,52 @@
+---
+description: Prompt Enrichment Protocol — for non-trivial tasks, ask clarifying questions before implementing. Use when prompt is ambiguous, multi-step, or impacts more than one file.
+alwaysApply: false
+---
+
+# Prompt Enrichment Protocol (PEP)
+
+Before implementing a non-trivial task, ask the user to clarify scope. Cheap up front; expensive in rework.
+
+## When to apply
+
+| Apply | Skip |
+|---|---|
+| New features | Single-line fix, typo, lint |
+| Multi-file changes | Pure read-only research |
+| Architectural decisions | Continuation of an approved plan |
+| Refactors | User said "just do it" / "skip questions" |
+| Anything ambiguous | User attached an explicit spec |
+
+## How to enrich
+
+1. **Identify gaps**: scope boundary, behavior on edge cases, technical decisions (libraries, patterns), success criteria, file/module boundaries.
+2. **Ask 3–7 targeted questions.** Offer choices with a recommended default — make it easy to skim and answer.
+3. **Synthesize a plan**:
+   - Task breakdown
+   - Subagent assignments (which agent handles which subtask)
+   - File ownership (which files each agent touches)
+   - Estimated cost tier
+4. **Wait for approval.** Maximum 2 plan revisions before you stop and ask the user to take over.
+5. **Then execute** via delegation.
+
+## Question template
+
+```markdown
+Before I start, a few clarifications:
+
+1. **Scope** — [question]? (default: X)
+2. **Behavior** — [question]? (default: Y)
+3. **Tech choice** — [question]? (default: Z)
+4. ...
+
+Recommended plan:
+- Subtask A → engineer (file X)
+- Subtask B → coder (file Y)
+- Review → reviewer
+
+Approve, edit, or say "skip questions" to proceed with defaults.
+```
+
+## Bypass
+
+If the user says "skip questions", "just do it", "no PEP", or "go" — bypass and execute with sensible defaults. Note any decisions you made for them in the final report so they can correct mid-flight.

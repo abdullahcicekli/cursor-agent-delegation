@@ -1,0 +1,54 @@
+---
+description: Code hygiene — applied whenever editing source files. Defers to .cursor/skills/clean-code for the full ruleset.
+globs: "**/*.{ts,tsx,js,jsx,mjs,cjs,py,go,rs,java,kt,kts,rb,php,cs,swift,scala,c,cc,cpp,h,hpp}"
+alwaysApply: false
+---
+
+# Clean Code Rules
+
+When editing source files, follow these rules. Full ruleset: `.cursor/skills/clean-code/SKILL.md`.
+
+## Hard prohibitions
+
+- **No comments** describing what the code does. Self-documenting names instead.
+  - Exception: a one-liner explaining a non-obvious *why* — a workaround, an invariant, a hidden constraint.
+  - Exception: doc comments (JSDoc / TSDoc / docstrings) on exported public APIs are fine.
+- **No `console.*` / `print` debugging artifacts.** Use the project's logger.
+- **No `debugger` statements.**
+- **No commented-out code.** Use version control.
+- **No `any` / `interface{}` / `Object` escape hatches** unless the type genuinely cannot be expressed.
+- **No `TODO` / `FIXME` / `XXX` markers** unless the user asks for them.
+
+## Naming
+
+| Element | Convention |
+|---|---|
+| Files | `kebab-case` (or match project convention) |
+| Variables / functions | `camelCase` (or `snake_case` for Python / Ruby) |
+| Classes / types | `PascalCase` |
+| Constants | `UPPER_SNAKE_CASE` |
+| Booleans | `is*`, `has*`, `should*` |
+
+If the project uses different conventions, match the project — these are defaults for greenfield code.
+
+## Function structure
+
+- Aim for ≤ 20 lines, ≤ 3 parameters, ≤ 2 nesting levels, cyclomatic complexity ≤ 8. Use early returns over nested conditionals.
+- One function, one job. If "and" appears in the name, split it.
+
+## Error handling
+
+- Every catch block does something meaningful (log, transform, rethrow). No silent swallows.
+- Domain-specific error types over generic `Error`.
+- Separate user-facing errors from internal errors.
+
+## File structure
+
+- Aim for ≤ 250 lines per file. One concept per file.
+- Co-locate related code: tests next to source, types next to implementation.
+
+## Imports
+
+- No circular deps. No wildcard imports. Group: framework → third-party → internal → relative. Remove unused imports immediately.
+
+> The "aim for" thresholds are targets, not gates. Match project conventions where they differ. Hard prohibitions are non-negotiable.

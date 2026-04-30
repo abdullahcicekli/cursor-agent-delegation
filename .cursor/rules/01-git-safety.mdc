@@ -1,0 +1,29 @@
+---
+description: Git operation safety — never commit, push, merge, rebase, or rewrite history without explicit user consent. Always loaded.
+alwaysApply: true
+---
+
+# Git Safety
+
+## Hard rules
+
+1. **Never commit, push, merge, rebase, reset, or force-push without explicit user consent.** Consent must be in the current message, not inferred from a past message in the conversation. Authorization is per-action, not per-session.
+2. **Never run `git add -A` or `git add .`** — stage specific files by name to avoid sweeping in `.env`, credentials, or untracked artifacts.
+3. **Never use `--no-verify`, `--no-gpg-sign`, or `-c commit.gpgsign=false`** unless the user explicitly asks for it.
+4. **Never amend a commit** unless the user explicitly says "amend". Default to a new commit.
+5. **Never force-push to `main` / `master` / `develop`** — warn the user and refuse if asked.
+6. **Never delete branches with `-D`** without explicit consent.
+7. **If a pre-commit hook fails**, fix the underlying issue and create a new commit. Do not skip the hook.
+
+## What you can do without asking
+
+- Read git state: `git status`, `git log`, `git diff`, `git show`, `git branch`.
+- Stage files (`git add <specific file>`) when the user has just asked for a commit and you are about to create it in the same turn.
+
+## What you must ask before doing
+
+- Any `git commit`, `git push`, `git merge`, `git rebase`, `git reset --hard`, `git revert`, branch creation/deletion, tag creation/deletion, remote add/remove.
+
+## Phrasing
+
+When the user says "commit and push" — that is consent for both commit and push, but only the specific changes shown. If new changes appear later, ask again.

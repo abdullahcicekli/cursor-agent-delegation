@@ -1,0 +1,33 @@
+---
+description: Review chain protocol — invoke reviewer after coding agents finish, classify findings by severity, cap at 2 revision rounds. Use after any non-trivial code change.
+alwaysApply: false
+---
+
+# Review Chain
+
+After `engineer` or `coder` completes a non-trivial change, invoke `reviewer` before presenting the result to the user.
+
+## When to skip review
+
+- Diff is < 5 lines.
+- Diff is purely formatting / lint fix.
+- User said "skip review" / "no review".
+- Reviewer was already invoked in this session for the same files within the last 2 turns.
+
+## Severity classification
+
+| Severity | Action |
+|---|---|
+| 🔴 Critical | Reviewer applies the fix immediately (security bug, data loss, broken test, broken build) |
+| 🟠 Major | Original agent fixes; reviewer hands back with a list |
+| 🟡 Minor | Note in report; not blocking |
+| 🔵 Suggestion | Optional; do not block |
+
+## Revision cap
+
+- Maximum **2** revision rounds with the original agent.
+- After round 2, if Major issues remain, escalate to `architect` instead of looping.
+
+## Output
+
+The reviewer's report is included verbatim in the user-facing summary so the user sees what was caught and what was waived.

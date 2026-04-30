@@ -1,0 +1,42 @@
+---
+description: Project Context Discovery — read host project documentation before starting any task. Always loaded.
+alwaysApply: true
+---
+
+# Project Context Discovery (PCD)
+
+Before starting any non-trivial task, read the host project's documentation. This is what makes the boilerplate adapt to whatever repo it lands in.
+
+## What to read (in priority order)
+
+1. **`README.md`** at repo root — primary project description, conventions, commands.
+2. **Other root `*.md` files** — `CONTRIBUTING.md`, `ARCHITECTURE.md`, `STYLEGUIDE.md`, etc.
+   - **Skip**: `AGENTS.md`, `LICENSE`, `CHANGELOG.md` (these are boilerplate or noise).
+3. **`docs/` folder** — design docs, ADRs, API references. Read up to 3 levels deep, markdown / rst / adoc files.
+
+## Token budget
+
+| Task complexity | Max PCD files | Max PCD tokens |
+|---|---|---|
+| Trivial (single line, typo) | 0 | 0 |
+| Simple (single file edit) | 1–2 | ~3K |
+| Standard (feature, bug fix) | 3–5 | ~6K |
+| Complex (architecture, refactor) | up to 8 | ~10K |
+
+If a project doc set is huge, prioritize: (a) section that names the area you're working in, (b) overall architecture / structure, (c) coding conventions.
+
+## Priority hierarchy
+
+1. **Boilerplate structural rules** — delegation playbook, git safety, file ownership — never overridden.
+2. **Project-specific conventions** — naming, architecture, style, test patterns — override boilerplate coding defaults.
+3. **Boilerplate coding defaults** (skills) — apply only where the project has no opinion.
+
+## When to skip PCD
+
+- Trivial fixes (typo, single line).
+- Pure read-only research where the question doesn't depend on conventions.
+- Continuations of a previous task in the same session where context is already loaded.
+
+## When delegating
+
+When you delegate to a subagent, include the relevant project context paths in the task description so the subagent doesn't re-discover from scratch. Example: `Project context: README.md (Setup section), docs/api-conventions.md`.
