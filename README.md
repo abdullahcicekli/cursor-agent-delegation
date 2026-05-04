@@ -139,6 +139,9 @@ Tell the main agent: `do this yourself, no delegation` — the rule honors expli
 - **No language-specific skills**: Java, Spring, React, etc. opinions live in the host project's docs, where they belong.
 - **English only**: the boilerplate is generic; user-facing tone is whatever you set in your own project.
 
+### Reference
+- https://github.com/AFET-TEAM/copilot-agent-delegation
+
 ## License
 
 MIT — see `LICENSE`.
